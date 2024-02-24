@@ -1,4 +1,44 @@
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 header {
     display: flex;
     justify-content: space-between;
+    padding: 25px;
+}
+
+h1 {
+    text-align: center;
+    position: relative;
+}
+
+p {
+    text-align: center;
+}
+
+button {
+    position: absolute;
+    left: 45%;
+    color: azure;
+    background-color: blueviolet;
+    height: 50px;
+    border-radius: 20%;
+}
+
+.button {
+    position: absolute;
+    left: 45%;
+    padding: 10px;
+    width: 100px;
+    border-radius: 10px;
+    text-align: center;
+    color: azure;
+    background-color: rgb(73, 5, 137);
+    font-size: larger;
+    
+}
+
+.button:hover {
+    background-color: rgb(179, 70, 175);
 }
