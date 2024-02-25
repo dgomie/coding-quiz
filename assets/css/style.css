@@ -1,5 +1,9 @@
 :root {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    --dark: rgb(73, 5, 137);
+    --light: rgb(179, 70, 175);
+    --white: azure;
 }
 
 header {
@@ -17,7 +21,23 @@ p {
     text-align: center;
 }
 
-.container {
+li {
+
+    display: block;
+    text-align: center;
+    background-color: var(--dark);
+    color: var(--white);
+    border-radius: 10px;
+    width: 300px;
+    padding: 10px;
+    margin: 5px;
+}
+
+button {
+    margin: 5px;
+}
+
+#container {
     width: auto;
     display: flex;
     align-items: center;
@@ -25,17 +45,19 @@ p {
     justify-content: center;
    
 }
+
 .button {
     padding: 10px;
     width: 100px;
     border-radius: 10px;
     text-align: center;
-    color: azure;
-    background-color: rgb(73, 5, 137);
+    color: var(--white);
+    background-color: var(--dark);
     font-size: larger;
     
 }
 
-.button:hover {
-    background-color: rgb(179, 70, 175);
+.button:hover, li:hover {
+    background-color: var(--light);
 }
+
