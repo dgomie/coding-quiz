@@ -1,8 +1,10 @@
-var timerEl = document.querySelector("#count");
+var countEl = document.querySelector("#count");
+var timerEl = document.querySelector("#timer")
 var startEl = document.querySelector("#start");
 var pTextEl = document.querySelector("#pText");
 var mainTextEl = document.querySelector("#mainText");
 var containerEl = document.querySelector("#container");
+var viewHighScoresEl = document.querySelector("#highScores")
 
 var timeLeft = 60;
 var questionNum = 0;
@@ -11,15 +13,70 @@ isDone = false;
 
 
 console.log(`Local storage items ${localStorage.length}`)
-// parsing and grabbing the user high scores from local storage
-for (let index = 1; index <= localStorage.length; index++) {
-  const element = JSON.parse(localStorage.getItem("user" + [index]));
 
-  console.log(element)
-  console.log(element.userInitials + element.userScore)
-  console.log(element.userScore)
-  
+
+// parsing and grabbing the user high scores from local storage
+function viewHighScores() {
+  mainTextEl.textContent = "High Scores";
+
+  if (!isDone) {
+    containerEl.removeChild(startEl);
+  } else {
+    var submitButtonEl = document.querySelector("#submit-btn")
+    var enterIntialEl = document.querySelector("#enterInitial")
+    var initialInputEl = document.querySelector("#initialInput")
+    containerEl.removeChild(submitButtonEl);
+    containerEl.removeChild(enterIntialEl);
+    containerEl.removeChild(initialInputEl);
+  };
+  pTextEl.setAttribute("style", "display: none");
+  viewHighScoresEl.setAttribute("style", "display: none");
+  timerEl.setAttribute("style", "display: none");
+
+
+  for (let index = 1; index <= localStorage.length; index++) {
+    const element = JSON.parse(localStorage.getItem("user" + [index]));
+
+    console.log(element)
+    console.log(element.userInitials + element.userScore)
+    console.log(element.userScore)
+
+    var scoreCard = document.createElement("li");
+    scoreCard.setAttribute("class", "scoreCard");
+    scoreCard.textContent = `${element.userInitials} - ${element.userScore}`;
+    containerEl.append(scoreCard);
+  };
+
+  var goBackButton = document.createElement("div");
+  goBackButton.classList.add("button", "hsButton");
+  goBackButton.textContent = "Go Back";
+  containerEl.append(goBackButton);
+  goBackButton.addEventListener("click", function() {
+    location.reload();
+  })
+
+  var clearScoresButton = document.createElement("div");
+  clearScoresButton.classList.add("button", "hsButton");
+  clearScoresButton.textContent = "Clear High Scores";
+  containerEl.append(clearScoresButton);
+  clearScoresButton.addEventListener("click", clearHighScores)
+
+};
+// clearing out highscore cards and local storage
+function clearHighScores() {
+
+  for (let index = 0; index < localStorage.length; index++) {
+    var scoreCard = document.querySelector("li");
+    containerEl.removeChild(scoreCard)
+  }
+  localStorage.clear();
+
 }
+
+
+
+
+
 
 
 var questionBank = {
@@ -82,13 +139,14 @@ function quizOver() {
   // rendering the high score sumbission form
   var enterIntial = document.createElement("p");
   enterIntial.textContent = "Enter initials: ";
-  enterIntial.setAttribute("style", "display: block");
+  enterIntial.setAttribute("id", "enterInitial", "style", "display: block");
 
   var initialInput = document.createElement("input");
   initialInput.setAttribute("id", "initialInput", "style", "display: block");
 
-  var submitButton = document.createElement("button");
+  var submitButton = document.createElement("div");
   submitButton.textContent = "Submit";
+  submitButton.classList.add("button")
   submitButton.setAttribute('id', "submit-btn");
   submitButton.setAttribute("style", "display: block");
 
@@ -106,7 +164,7 @@ function quizOver() {
           userScore: timeLeft,
         };
         
-      };
+      
       // check if there's already high scores in local storage. If no scores, create new userScore object
       if (localStorage.length === 0){
         localStorage.setItem("user" + 1, JSON.stringify(userScore));
@@ -114,7 +172,9 @@ function quizOver() {
         var numHighScores = localStorage.length +1;
         localStorage.setItem("user" + numHighScores, JSON.stringify(userScore));
       };
-      
+      viewHighScores();
+    };
+  
   });
  
 
@@ -199,15 +259,15 @@ function startTimer() {
         
     if (isDone && timeLeft > 0) {
       clearInterval(timerInterval);
-      timerEl.textContent = timeLeft;
+      countEl.textContent = timeLeft;
     } else if (timeLeft > 0) {
-      timerEl.textContent = timeLeft;
+      countEl.textContent = timeLeft;
       timeLeft--;
     } else {
       timeLeft--;
       quizOver()
       clearInterval(timerInterval);
-      timerEl.textContent = timeLeft;
+      countEl.textContent = timeLeft;
 
     } 
   }, 1000); 
@@ -223,7 +283,7 @@ function checkDone() {
 
 
 startEl.addEventListener("click", startQuiz);
-
+viewHighScoresEl.addEventListener("click", viewHighScores)
 
 
 

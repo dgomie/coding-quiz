@@ -3,6 +3,7 @@
     font-size: large;
     --dark: rgb(73, 5, 137);
     --light: rgb(179, 70, 175);
+    --highScore: rgb(122, 60, 120);
     --white: azure;
 }
 
@@ -19,6 +20,7 @@ h1 {
 
 p {
     text-align: center;
+    margin: 10px;;
 }
 
 li {
@@ -35,6 +37,11 @@ li {
 
 button {
     margin: 5px;
+}
+
+input {
+    margin: 10px;
+    width: auto;
 }
 
 .pop {
@@ -64,7 +71,19 @@ button {
     
 }
 
+.hsButton {
+    position: relative;
+    width: auto;
+    display: inline;
+}
+
+
 .button:hover, li:hover {
     background-color: var(--light);
 }
 
+.scoreCard {
+    color: var(--white);
+    background-color: var(--highScore);
+    border-radius: 5px;
+}
