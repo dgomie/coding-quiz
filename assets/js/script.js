@@ -5,9 +5,11 @@ var mainTextEl = document.querySelector("#mainText");
 var containerEl = document.querySelector("#container");
 
 
-var timeLeft = 3;
-var score = 0;
+var timeLeft = 60;
 var questionNum = 0;
+isDone = false;
+
+
 
 
 var questionBank = {
@@ -21,7 +23,21 @@ var questionBank = {
         answers: ["Husky", "Albatross", "Eagle", "Falcon"],
         correctAnswer: "Husky",
     },
-}
+    2: {
+      question: "Which of the following is not an dessert?",
+      answers: ["Pie", "Cake", "Chocolate", "Lettuce"],
+      correctAnswer: "Lettuce",
+    },
+    3: {
+      question: "Which of the following is not an band?",
+      answers: ["Arctic Monkeys", "Monkeys", "Bonobos", "Gorillas"],
+      correctAnswer: "Bonobos",
+    },
+};
+
+var qBankLength = Object.keys(questionBank).length;
+console.log(`Question bank length: ${qBankLength}`)
+
 
 
 function clearQuestion() {
@@ -37,10 +53,10 @@ function clearFeedback() {
   containerEl.removeChild(feedbackPop);
 };
 // gameOver function clears remaining question and answers and displays the user's final score and a input box asking for the user's initials for placement on the leaderboard
-function gameOver() {
+function quizOver() {
   clearFeedback();
   mainTextEl.textContent = "All Done!"
-  pTextEl.textContent = `Your final score is ${score}`
+  pTextEl.textContent = `Your final score is ${timeLeft}`
   pTextEl.setAttribute("style", "display: inline")
   var answerButtons = document.querySelectorAll("li");
   for (let index = 0; index < answerButtons.length; index++) {
@@ -57,6 +73,7 @@ function gameOver() {
 
   submitButton = document.createElement("button");
   submitButton.textContent = "Submit";
+  submitButton.setAttribute('id', "submit-btn");
   submitButton.setAttribute("style", "display: block");
 
   containerEl.append(enterIntial, initialInput, submitButton);
@@ -73,61 +90,65 @@ function startQuiz() {
     
    
    // changeQuestion currently uses questionNum to pull the corresponding object from the question bank. Need to figure out when/where to add to the questionNum. 
-function changeQuestion() {
-    clearQuestion();
-    var currentQuestion = questionBank[questionNum]["question"];
-    var currentAnswers = questionBank[questionNum]["answers"];
-    var currentCorrect = questionBank[questionNum]["correctAnswer"];
-   
+  function changeQuestion() {
+      clearQuestion();
+      checkDone();
+      if (!isDone) {
+        var currentQuestion = questionBank[questionNum]["question"];
+        var currentAnswers = questionBank[questionNum]["answers"];
+        var currentCorrect = questionBank[questionNum]["correctAnswer"];
+      
+    
 
-    // change h1 to question
-    mainTextEl.textContent = currentQuestion;
+        // change h1 to question
+        mainTextEl.textContent = currentQuestion;
 
-    // print out answer choices
-    for (let index = 0; index < currentAnswers.length; index++) {
-      var answer= document.createElement('li');
-      answer.classList.add("button");
-      answer.textContent = currentAnswers[index];
-     
-    //  check answer
-      answer.addEventListener("click", function(){
-        if (questionNum > 0) {
-          clearFeedback();
-        };
+        // render answer choices
+        for (let index = 0; index < currentAnswers.length; index++) {
+          var answer= document.createElement('li');
+          answer.classList.add("button");
+          answer.textContent = currentAnswers[index];
+      
+        //  check answer
+        answer.addEventListener("click", function(){
+          if (questionNum > 0) {
+            clearFeedback();
+          };
 
-        var feedbackPop = document.createElement("p");
-        feedbackPop.classList.add("pop");
-        containerEl.append(feedbackPop);
+          questionNum++;
 
-        var button = this.textContent;
-        console.log(button);
+          var feedbackPop = document.createElement("p");
+          feedbackPop.classList.add("pop");
+          containerEl.append(feedbackPop);
 
-        if (button === currentCorrect) {
-            feedbackPop.textContent = "Correct!";
-            questionNum++;
-            changeQuestion()
-            
-        } else {
-            feedbackPop.textContent = "Wrong!";
-            questionNum++;
-            // timeLeft -= 10;
-            changeQuestion();
-        }
-      });
-      containerEl.append(answer);
+          var button = this.textContent;
+          console.log(button);
+
+          if (button === currentCorrect) {
+              feedbackPop.textContent = "Correct!";
+              changeQuestion()
+              
+          } else {
+              feedbackPop.textContent = "Wrong!";
+              timeLeft -= 10;
+              changeQuestion();
+          }
+        });
+        containerEl.append(answer);
+      };
     };
 
     var buttonsEl = document.querySelectorAll("button");
     for (let index = 0; index < buttonsEl.length; index++) {
         var answer = buttonsEl[index];
-        console.log(answer);
+
     }
    
     
     }
 
     changeQuestion();
-    checkWin();
+    checkDone();
     
       
   };
@@ -136,13 +157,15 @@ function changeQuestion() {
 function startTimer() {
   var timerInterval = setInterval(function() {
         
-    if (timeLeft > 0) {
-      console.log(timeLeft);
+    if (isDone && timeLeft > 0) {
+      clearInterval(timerInterval);
+      timerEl.textContent = timeLeft;
+    } else if (timeLeft > 0) {
       timerEl.textContent = timeLeft;
       timeLeft--;
     } else {
-      gameOver()
-      console.log(timeLeft);
+      timeLeft--;
+      quizOver()
       clearInterval(timerInterval);
       timerEl.textContent = timeLeft;
 
@@ -151,9 +174,10 @@ function startTimer() {
 };
 
 
-function checkWin() {
-  if (questionNum > questionBank.length) {
-    gameOver();
+function checkDone() {
+  if (questionNum === qBankLength) {
+    isDone = true;
+    quizOver();
   }
 };
 
