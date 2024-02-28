@@ -37,6 +37,13 @@ button {
     margin: 5px;
 }
 
+.pop {
+    font-style: oblique;
+    color: gray;
+    font-size: larger;
+    padding: 10px;
+}
+
 #container {
     width: auto;
     display: flex;
