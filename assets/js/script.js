@@ -4,12 +4,22 @@ var pTextEl = document.querySelector("#pText");
 var mainTextEl = document.querySelector("#mainText");
 var containerEl = document.querySelector("#container");
 
-
 var timeLeft = 60;
 var questionNum = 0;
 isDone = false;
 
 
+
+console.log(`Local storage items ${localStorage.length}`)
+// parsing and grabbing the user high scores from local storage
+for (let index = 1; index <= localStorage.length; index++) {
+  const element = JSON.parse(localStorage.getItem("user" + [index]));
+
+  console.log(element)
+  console.log(element.userInitials + element.userScore)
+  console.log(element.userScore)
+  
+}
 
 
 var questionBank = {
@@ -52,33 +62,63 @@ function clearFeedback() {
   var feedbackPop = document.querySelector(".pop");
   containerEl.removeChild(feedbackPop);
 };
+
 // gameOver function clears remaining question and answers and displays the user's final score and a input box asking for the user's initials for placement on the leaderboard
 function quizOver() {
   clearFeedback();
+
+  // changing h1 to notify user that qiz is done and displaying user score
   mainTextEl.textContent = "All Done!"
   pTextEl.textContent = `Your final score is ${timeLeft}`
   pTextEl.setAttribute("style", "display: inline")
+
+  // clearing the multiple choice answers
   var answerButtons = document.querySelectorAll("li");
   for (let index = 0; index < answerButtons.length; index++) {
       const button = answerButtons[index];
       containerEl.removeChild(button)
   };
-    
+  
+  // rendering the high score sumbission form
   var enterIntial = document.createElement("p");
   enterIntial.textContent = "Enter initials: ";
   enterIntial.setAttribute("style", "display: block");
 
   var initialInput = document.createElement("input");
-  initialInput.setAttribute("style", "display: block");
+  initialInput.setAttribute("id", "initialInput", "style", "display: block");
 
-  submitButton = document.createElement("button");
+  var submitButton = document.createElement("button");
   submitButton.textContent = "Submit";
   submitButton.setAttribute('id', "submit-btn");
   submitButton.setAttribute("style", "display: block");
 
   containerEl.append(enterIntial, initialInput, submitButton);
 
-}
+  // submitting high score initials 
+  
+  submitButton.addEventListener("click", function() {
+    var initials = initialInput.value.trim();
+    if (initials === "") {
+      alert("Please enter a value");
+    } else {
+      var userScore = {
+          userInitials: initials,
+          userScore: timeLeft,
+        };
+        
+      };
+      // check if there's already high scores in local storage. If no scores, create new userScore object
+      if (localStorage.length === 0){
+        localStorage.setItem("user" + 1, JSON.stringify(userScore));
+      } else {
+        var numHighScores = localStorage.length +1;
+        localStorage.setItem("user" + numHighScores, JSON.stringify(userScore));
+      };
+      
+  });
+ 
+
+};
 
 
 function startQuiz() {
@@ -182,6 +222,9 @@ function checkDone() {
 };
 
 
-  startEl.addEventListener("click", startQuiz);
+startEl.addEventListener("click", startQuiz);
+
+
+
 
 
