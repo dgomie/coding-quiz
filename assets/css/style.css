@@ -9,7 +9,7 @@
 main {
     padding: 10px;
 }
-
+/* Includes 'view high scores' link and timer element */
 header {
     display: flex;
     justify-content: space-between;
@@ -100,6 +100,7 @@ hr {
 .submitFormContainer #submit-btn {
     font-size: medium;
     padding: 3px;
+    width: 65px;
 }
 
 .submitFormContainer input {

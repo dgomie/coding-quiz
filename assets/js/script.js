@@ -9,9 +9,9 @@ var timeLeft = 60;
 var questionNum = 0;
 isDone = false;
 
-// TODO Comment out sections of code in html/css/js
 // TODO If time allows try to sort high scores from highest to lowest
-// TODO Add replace placeholder questions with coding questions
+
+// Quiz questions, answers, and correct answer. Object is used in changeQuestion function within the startQuiz function
 var questionBank = {
     0: {
         question: "Commonly used data types DO NOT include:",
@@ -42,9 +42,8 @@ var questionBank = {
 
 var qBankLength = Object.keys(questionBank).length;
 
-
+// startQuiz begins the quiz and handles the changing of the quesitons 
 function startQuiz() {
-    console.log("start button clicked");
     // clear start text and replace with question text
     mainContainerEl.removeChild(startEl);
     pTextEl.setAttribute("style", "display: none");
@@ -69,14 +68,14 @@ function startQuiz() {
         answerContainerEl.setAttribute("id", "answerContainer")
         mainContainerEl.append(answerContainerEl)
 
-        // render answer choices
+        // render answer choice buttons
         for (let index = 0; index < currentAnswers.length; index++) {
           var answer= document.createElement('li');
           answer.classList.add("button");
           answer.textContent = currentAnswers[index];
           answerContainerEl.append(answer);
 
-        //  check answer
+        //  checks if answer is correct and renders the feedback based on the answer
         answer.addEventListener("click", function(){
           if (questionNum > 0) {
             clearFeedback();
@@ -84,25 +83,25 @@ function startQuiz() {
           clearQuestion();
           questionNum++;
 
-
-
+          // creates feedback container
           var feedbackContainerEl = document.createElement("div");
           feedbackContainerEl.setAttribute("id", "feedbackContainer")
           mainContainerEl.append(feedbackContainerEl);
-
+          // renders horizontal rule divider
           var hrEl = document.createElement("hr");
           feedbackContainerEl.append(hrEl);
-
+          // renders the feedback
           var feedbackPop = document.createElement("p");
           feedbackPop.classList.add("pop");
           feedbackContainerEl.append(feedbackPop);
 
+          // checks the user's answer
           var button = this.textContent;
-          console.log(button);
-
+          // changes the feedback text if the clicked answer equals the correct answer
           if (button === currentCorrect) {
               feedbackPop.textContent = "Correct!";
           } else {
+            // renders 'wrong' and subtracts time from the timer
               feedbackPop.textContent = "Wrong!";
               timeLeft -= 10;
           }
@@ -120,10 +119,11 @@ function startQuiz() {
     checkDone();   
   };
 
-
+// Starts the countdown timer 
 function startTimer() {
   var timerInterval = setInterval(function() {
-        
+    
+    // if no questions remain the clock stops
     if (isDone && timeLeft > 0) {
       clearInterval(timerInterval);
       countEl.textContent = timeLeft;
@@ -141,6 +141,8 @@ function startTimer() {
   }, 1000); 
 };
 
+/*Checks if there are any more questions left. 
+If no questions remain, function triggers quizOver and changes isDone to true in order to stop  timer*/
 
 function checkDone() {
   if (questionNum === qBankLength) {
@@ -149,18 +151,19 @@ function checkDone() {
   }
 };
 
+// removes the current answer elements from the page by removing the answerContainer
 function clearQuestion() {
   var answerContainerEl = document.querySelector("#answerContainer");
   mainContainerEl.removeChild(answerContainerEl)
 };
 
+// removes the feedback from the page by removing the feedbackContainer
 function clearFeedback() {
-// var feedbackPop = document.querySelector(".pop");
 var feedbackContainerEl = document.querySelector("#feedbackContainer")
 mainContainerEl.removeChild(feedbackContainerEl);
 };
 
-/*gameOver function clears remaining question and answers and displays the user's final score 
+/*quizOver function clears remaining question and answers and displays the user's final score 
 and a input box asking for the user's initials for placement on the leaderboard */
 
 function quizOver() {
@@ -173,32 +176,37 @@ pTextEl.textContent = `Your final score is ${timeLeft}`;
 pTextEl.setAttribute("style", "display: inline");
 
 // rendering the high score sumbission form
+// submit form container
 var submitFormContainer = document.createElement("div");
 submitFormContainer.classList.add("submitFormContainer")
 mainContainerEl.append(submitFormContainer);
-console.log("submit form container")
 
+
+// enter initials label
 var enterIntial = document.createElement("label");
 enterIntial.textContent = "Enter initials:";
 enterIntial.setAttribute("id", "enterInitial");
 
+// initials input
 var initialInput = document.createElement("input");
 initialInput.setAttribute("id", "initialInput");
 initialInput.type = "text";
 initialInput.autofocus;
 
+// submit button
 var submitButton = document.createElement("div");
 submitButton.textContent = "Submit";
 submitButton.classList.add("button")
 submitButton.setAttribute('id', "submit-btn");
-
-
+// appending form elements to container
 submitFormContainer.append(enterIntial, initialInput, submitButton);
 
-// submitting high score initials 
-
+// submitting high score initials when submit button is clicked
 submitButton.addEventListener("click", function() {
+  // takes the value of the initialInput and removes any excess spaces at the end of the value.
   var initials = initialInput.value.trim();
+
+  // validation to make sure input is not blank or too long.
   if (initials === "") {
     alert("Please enter your initials.");
   } else if (initials.length > 30) {
@@ -224,9 +232,12 @@ submitButton.addEventListener("click", function() {
 
 };
 
-// parsing and grabbing the user high scores from local storage
+// function parses and grabs the user high scores from local storage
 function viewHighScores() {
   mainTextEl.textContent = "High Scores";
+
+  /* checks if viewing the high scores from main page link. if using link, removes the main page elements. 
+  else it removes elements from the initials submission form*/
 
   if (!isDone) {
     mainContainerEl.removeChild(startEl);
@@ -237,26 +248,22 @@ function viewHighScores() {
   pTextEl.setAttribute("style", "display: none");
   viewHighScoresEl.setAttribute("style", "display: none");
   timerEl.setAttribute("style", "display: none");
-
-  
-
+// renders the high score scorecards from the local storage data
   for (let index = 1; index <= localStorage.length; index++) {
     const element = JSON.parse(localStorage.getItem("user" + [index]));
 
-    console.log(element)
-    console.log(element.userInitials + element.userScore)
-    console.log(element.userScore)
-
+    // high score cards with user initials and score
     var scoreCard = document.createElement("li");
     scoreCard.setAttribute("class", "scoreCard");
     scoreCard.textContent = `${element.userInitials} - ${element.userScore}`;
     mainContainerEl.append(scoreCard);
   };
-
+  // high score container that cards and buttons are appended to
   var hsContainerEl = document.createElement("div");
   hsContainerEl.setAttribute("class", "hsContainer");
   mainContainerEl.append(hsContainerEl);
 
+  // Button will go back to main page by refreshing the page
   var goBackButton = document.createElement("div");
   goBackButton.classList.add("button", "hsButton");
   goBackButton.textContent = "Go Back";
@@ -264,7 +271,7 @@ function viewHighScores() {
   goBackButton.addEventListener("click", function() {
     location.reload();
   })
-
+// Removes the scorecards from the container and clears the local storage using clearHighScores function
   var clearScoresButton = document.createElement("div");
   clearScoresButton.classList.add("button", "hsButton");
   clearScoresButton.textContent = "Clear High Scores";
@@ -272,7 +279,7 @@ function viewHighScores() {
   clearScoresButton.addEventListener("click", clearHighScores)
 
 };
-// clearing out highscore cards and local storage info
+// function for clearing out highscore cards and local storage info
 function clearHighScores() {
 
   for (let index = 0; index < localStorage.length; index++) {
@@ -283,12 +290,6 @@ function clearHighScores() {
 
 };
 
-
-
 // Event listeners to call the startQuiz function and viewHighScores function
 startEl.addEventListener("click", startQuiz);
 viewHighScoresEl.addEventListener("click", viewHighScores)
-
-
-
-
