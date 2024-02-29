@@ -1,4 +1,4 @@
-# coding-quiz
+# Coding Quiz Challenge
 
 ## Description
 
@@ -40,8 +40,6 @@ Additionally, the high scores section can be accessed by clicking on "view high 
 <img src="./assets/images/viewhighscore-highlight.png" width=500px alt="Coding quiz challenge start page with 'view high scores' highlighted." />
 
 Note: If an issue occurs with displaying high scores, navigate the the 'view high scores' section and click on the 'clear high scores' button. 
-
-## Credits
 
 ## License
 
