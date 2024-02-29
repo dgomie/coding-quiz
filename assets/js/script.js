@@ -195,8 +195,10 @@ submitFormContainer.append(enterIntial, initialInput, submitButton);
 submitButton.addEventListener("click", function() {
   var initials = initialInput.value.trim();
   if (initials === "") {
-    alert("Please enter your initials");
-  } else {
+    alert("Please enter your initials.");
+  } else if (initials.length > 30) {
+    alert("Too many characters.\n Please enter a value between 1-30 characters.")
+  }else {
     var userScore = {
         userInitials: initials,
         userScore: timeLeft,
