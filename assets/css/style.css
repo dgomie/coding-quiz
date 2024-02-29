@@ -6,6 +6,9 @@
     --highScore: rgb(122, 60, 120);
     --white: azure;
 }
+main {
+    padding: 10px;
+}
 
 header {
     display: flex;
@@ -18,9 +21,9 @@ h1 {
     position: relative;
 }
 
-p {
+p, label{
     text-align: center;
-    margin: 10px;;
+    margin: 10px;
 }
 
 li {
@@ -45,6 +48,9 @@ input {
 }
 
 .pop {
+    align-self: flex-start;
+    justify-content: flex-end;
+   
     font-style: oblique;
     color: gray;
     font-size: larger;
@@ -71,12 +77,19 @@ input {
     
 }
 
+
 .hsButton {
-    position: relative;
+    padding: 10px;
+    margin: 5px;
     width: auto;
-    display: inline;
+    font-size: medium;
 }
 
+.hsContainer {
+    display: flex;
+    justify-content: flex-start;
+    
+}
 
 .button:hover, li:hover {
     background-color: var(--light);
@@ -86,4 +99,30 @@ input {
     color: var(--white);
     background-color: var(--highScore);
     border-radius: 5px;
+    border-radius: 0px;
+    width: 50%;
+}
+
+.submitFormContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submitFormContainer #submit-btn {
+    font-size: medium;
+    padding: 3px;
+}
+
+#highScores {
+    text-decoration: underline;
+}
+
+#highScores:hover {
+    color: var(--highScore);
+}
+
+#timer {
+    position: absolute;
+    right: 5%;
 }

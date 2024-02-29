@@ -4,16 +4,10 @@ var startEl = document.querySelector("#start");
 var pTextEl = document.querySelector("#pText");
 var mainTextEl = document.querySelector("#mainText");
 var containerEl = document.querySelector("#container");
-var viewHighScoresEl = document.querySelector("#highScores")
-
+var viewHighScoresEl = document.querySelector("#highScores");
 var timeLeft = 60;
 var questionNum = 0;
 isDone = false;
-
-
-
-console.log(`Local storage items ${localStorage.length}`)
-
 
 // parsing and grabbing the user high scores from local storage
 function viewHighScores() {
@@ -22,17 +16,14 @@ function viewHighScores() {
   if (!isDone) {
     containerEl.removeChild(startEl);
   } else {
-    var submitButtonEl = document.querySelector("#submit-btn")
-    var enterIntialEl = document.querySelector("#enterInitial")
-    var initialInputEl = document.querySelector("#initialInput")
-    containerEl.removeChild(submitButtonEl);
-    containerEl.removeChild(enterIntialEl);
-    containerEl.removeChild(initialInputEl);
+    var submitFormContainer = document.querySelector(".submitFormContainer")
+    containerEl.removeChild(submitFormContainer)
   };
   pTextEl.setAttribute("style", "display: none");
   viewHighScoresEl.setAttribute("style", "display: none");
   timerEl.setAttribute("style", "display: none");
 
+  
 
   for (let index = 1; index <= localStorage.length; index++) {
     const element = JSON.parse(localStorage.getItem("user" + [index]));
@@ -47,10 +38,14 @@ function viewHighScores() {
     containerEl.append(scoreCard);
   };
 
+  var hsContainerEl = document.createElement("div");
+  hsContainerEl.setAttribute("class", "hsContainer");
+  containerEl.append(hsContainerEl);
+
   var goBackButton = document.createElement("div");
   goBackButton.classList.add("button", "hsButton");
   goBackButton.textContent = "Go Back";
-  containerEl.append(goBackButton);
+  hsContainerEl.append(goBackButton);
   goBackButton.addEventListener("click", function() {
     location.reload();
   })
@@ -58,11 +53,11 @@ function viewHighScores() {
   var clearScoresButton = document.createElement("div");
   clearScoresButton.classList.add("button", "hsButton");
   clearScoresButton.textContent = "Clear High Scores";
-  containerEl.append(clearScoresButton);
+  hsContainerEl.append(clearScoresButton);
   clearScoresButton.addEventListener("click", clearHighScores)
 
 };
-// clearing out highscore cards and local storage
+// clearing out highscore cards and local storage info
 function clearHighScores() {
 
   for (let index = 0; index < localStorage.length; index++) {
@@ -71,11 +66,7 @@ function clearHighScores() {
   }
   localStorage.clear();
 
-}
-
-
-
-
+};
 
 
 
@@ -103,9 +94,6 @@ var questionBank = {
 };
 
 var qBankLength = Object.keys(questionBank).length;
-console.log(`Question bank length: ${qBankLength}`)
-
-
 
 function clearQuestion() {
     var answerButtons = document.querySelectorAll("li");
@@ -120,7 +108,9 @@ function clearFeedback() {
   containerEl.removeChild(feedbackPop);
 };
 
-// gameOver function clears remaining question and answers and displays the user's final score and a input box asking for the user's initials for placement on the leaderboard
+/*gameOver function clears remaining question and answers and displays the user's final score 
+and a input box asking for the user's initials for placement on the leaderboard */
+
 function quizOver() {
   clearFeedback();
 
@@ -137,20 +127,26 @@ function quizOver() {
   };
   
   // rendering the high score sumbission form
-  var enterIntial = document.createElement("p");
+  var submitFormContainer = document.createElement("div");
+  submitFormContainer.classList.add("submitFormContainer")
+  containerEl.append(submitFormContainer);
+
+  var enterIntial = document.createElement("label");
   enterIntial.textContent = "Enter initials: ";
-  enterIntial.setAttribute("id", "enterInitial", "style", "display: block");
+  enterIntial.setAttribute("id", "enterInitial");
 
   var initialInput = document.createElement("input");
-  initialInput.setAttribute("id", "initialInput", "style", "display: block");
+  initialInput.setAttribute("id", "initialInput");
+  initialInput.type = "text";
+  initialInput.autofocus;
 
   var submitButton = document.createElement("div");
   submitButton.textContent = "Submit";
   submitButton.classList.add("button")
   submitButton.setAttribute('id', "submit-btn");
-  submitButton.setAttribute("style", "display: block");
+  
 
-  containerEl.append(enterIntial, initialInput, submitButton);
+  submitFormContainer.append(enterIntial, initialInput, submitButton);
 
   // submitting high score initials 
   
@@ -186,10 +182,12 @@ function startQuiz() {
     // clear start text and replace with question text
     containerEl.removeChild(startEl);
     pTextEl.setAttribute("style", "display: none");
+    viewHighScoresEl.setAttribute("style", "display: none");
     startTimer();
+
     
    
-   // changeQuestion currently uses questionNum to pull the corresponding object from the question bank. Need to figure out when/where to add to the questionNum. 
+   // changeQuestion currently uses questionNum to pull the corresponding object from the question bank.  
   function changeQuestion() {
       clearQuestion();
       checkDone();
@@ -197,8 +195,6 @@ function startQuiz() {
         var currentQuestion = questionBank[questionNum]["question"];
         var currentAnswers = questionBank[questionNum]["answers"];
         var currentCorrect = questionBank[questionNum]["correctAnswer"];
-      
-    
 
         // change h1 to question
         mainTextEl.textContent = currentQuestion;
@@ -241,16 +237,10 @@ function startQuiz() {
     var buttonsEl = document.querySelectorAll("button");
     for (let index = 0; index < buttonsEl.length; index++) {
         var answer = buttonsEl[index];
-
-    }
-   
-    
-    }
+    }};
 
     changeQuestion();
-    checkDone();
-    
-      
+    checkDone();   
   };
 
 
