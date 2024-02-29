@@ -9,67 +9,9 @@ var timeLeft = 60;
 var questionNum = 0;
 isDone = false;
 
-// parsing and grabbing the user high scores from local storage
-function viewHighScores() {
-  mainTextEl.textContent = "High Scores";
-
-  if (!isDone) {
-    mainContainerEl.removeChild(startEl);
-  } else {
-    var submitFormContainer = document.querySelector(".submitFormContainer")
-    mainContainerEl.removeChild(submitFormContainer)
-  };
-  pTextEl.setAttribute("style", "display: none");
-  viewHighScoresEl.setAttribute("style", "display: none");
-  timerEl.setAttribute("style", "display: none");
-
-  
-
-  for (let index = 1; index <= localStorage.length; index++) {
-    const element = JSON.parse(localStorage.getItem("user" + [index]));
-
-    console.log(element)
-    console.log(element.userInitials + element.userScore)
-    console.log(element.userScore)
-
-    var scoreCard = document.createElement("li");
-    scoreCard.setAttribute("class", "scoreCard");
-    scoreCard.textContent = `${element.userInitials} - ${element.userScore}`;
-    mainContainerEl.append(scoreCard);
-  };
-
-  var hsContainerEl = document.createElement("div");
-  hsContainerEl.setAttribute("class", "hsContainer");
-  mainContainerEl.append(hsContainerEl);
-
-  var goBackButton = document.createElement("div");
-  goBackButton.classList.add("button", "hsButton");
-  goBackButton.textContent = "Go Back";
-  hsContainerEl.append(goBackButton);
-  goBackButton.addEventListener("click", function() {
-    location.reload();
-  })
-
-  var clearScoresButton = document.createElement("div");
-  clearScoresButton.classList.add("button", "hsButton");
-  clearScoresButton.textContent = "Clear High Scores";
-  hsContainerEl.append(clearScoresButton);
-  clearScoresButton.addEventListener("click", clearHighScores)
-
-};
-// clearing out highscore cards and local storage info
-function clearHighScores() {
-
-  for (let index = 0; index < localStorage.length; index++) {
-    var scoreCard = document.querySelector("li");
-    mainContainerEl.removeChild(scoreCard)
-  }
-  localStorage.clear();
-
-};
-
-
-
+// TODO Comment out sections of code in html/css/js
+// TODO If time allows try to sort high scores from highest to lowest
+// TODO Add replace placeholder questions with coding questions
 var questionBank = {
     0: {
         question: "Which of the following is not a fruit?",
@@ -94,80 +36,6 @@ var questionBank = {
 };
 
 var qBankLength = Object.keys(questionBank).length;
-
-function clearQuestion() {
-    var answerContainerEl = document.querySelector("#answerContainer");
-    mainContainerEl.removeChild(answerContainerEl)
-};
-
-function clearFeedback() {
-  // var feedbackPop = document.querySelector(".pop");
-  var feedbackContainerEl = document.querySelector("#feedbackContainer")
-  mainContainerEl.removeChild(feedbackContainerEl);
-};
-
-/*gameOver function clears remaining question and answers and displays the user's final score 
-and a input box asking for the user's initials for placement on the leaderboard */
-
-function quizOver() {
-  mainContainerEl.style.flexDirection = "column";
-  clearFeedback();
-
-  // changing h1 to notify user that qiz is done and displaying user score
-  mainTextEl.textContent = "All Done!";
-  pTextEl.textContent = `Your final score is ${timeLeft}`;
-  pTextEl.setAttribute("style", "display: inline");
-  
-  // rendering the high score sumbission form
-  var submitFormContainer = document.createElement("div");
-  submitFormContainer.classList.add("submitFormContainer")
-  mainContainerEl.append(submitFormContainer);
-  console.log("submit form container")
-
-  var enterIntial = document.createElement("label");
-  enterIntial.textContent = "Enter initials:";
-  enterIntial.setAttribute("id", "enterInitial");
-
-  var initialInput = document.createElement("input");
-  initialInput.setAttribute("id", "initialInput");
-  initialInput.type = "text";
-  initialInput.autofocus;
-
-  var submitButton = document.createElement("div");
-  submitButton.textContent = "Submit";
-  submitButton.classList.add("button")
-  submitButton.setAttribute('id', "submit-btn");
-  
-
-  submitFormContainer.append(enterIntial, initialInput, submitButton);
-
-  // submitting high score initials 
-  
-  submitButton.addEventListener("click", function() {
-    var initials = initialInput.value.trim();
-    if (initials === "") {
-      alert("Please enter your initials");
-    } else {
-      var userScore = {
-          userInitials: initials,
-          userScore: timeLeft,
-        };
-        
-      
-      // check if there's already high scores in local storage. If no scores, create new userScore object
-      if (localStorage.length === 0){
-        localStorage.setItem("user" + 1, JSON.stringify(userScore));
-      } else {
-        var numHighScores = localStorage.length +1;
-        localStorage.setItem("user" + numHighScores, JSON.stringify(userScore));
-      };
-      viewHighScores();
-    };
-  
-  });
- 
-
-};
 
 
 function startQuiz() {
@@ -276,7 +144,141 @@ function checkDone() {
   }
 };
 
+function clearQuestion() {
+  var answerContainerEl = document.querySelector("#answerContainer");
+  mainContainerEl.removeChild(answerContainerEl)
+};
 
+function clearFeedback() {
+// var feedbackPop = document.querySelector(".pop");
+var feedbackContainerEl = document.querySelector("#feedbackContainer")
+mainContainerEl.removeChild(feedbackContainerEl);
+};
+
+/*gameOver function clears remaining question and answers and displays the user's final score 
+and a input box asking for the user's initials for placement on the leaderboard */
+
+function quizOver() {
+mainContainerEl.style.flexDirection = "column";
+clearFeedback();
+
+// changing h1 to notify user that qiz is done and displaying user score
+mainTextEl.textContent = "All Done!";
+pTextEl.textContent = `Your final score is ${timeLeft}`;
+pTextEl.setAttribute("style", "display: inline");
+
+// rendering the high score sumbission form
+var submitFormContainer = document.createElement("div");
+submitFormContainer.classList.add("submitFormContainer")
+mainContainerEl.append(submitFormContainer);
+console.log("submit form container")
+
+var enterIntial = document.createElement("label");
+enterIntial.textContent = "Enter initials:";
+enterIntial.setAttribute("id", "enterInitial");
+
+var initialInput = document.createElement("input");
+initialInput.setAttribute("id", "initialInput");
+initialInput.type = "text";
+initialInput.autofocus;
+
+var submitButton = document.createElement("div");
+submitButton.textContent = "Submit";
+submitButton.classList.add("button")
+submitButton.setAttribute('id', "submit-btn");
+
+
+submitFormContainer.append(enterIntial, initialInput, submitButton);
+
+// submitting high score initials 
+
+submitButton.addEventListener("click", function() {
+  var initials = initialInput.value.trim();
+  if (initials === "") {
+    alert("Please enter your initials");
+  } else {
+    var userScore = {
+        userInitials: initials,
+        userScore: timeLeft,
+      };
+      
+    
+    // check if there's already high scores in local storage. If no scores, create new userScore object
+    if (localStorage.length === 0){
+      localStorage.setItem("user" + 1, JSON.stringify(userScore));
+    } else {
+      var numHighScores = localStorage.length +1;
+      localStorage.setItem("user" + numHighScores, JSON.stringify(userScore));
+    };
+    viewHighScores();
+  };
+
+});
+
+};
+
+// parsing and grabbing the user high scores from local storage
+function viewHighScores() {
+  mainTextEl.textContent = "High Scores";
+
+  if (!isDone) {
+    mainContainerEl.removeChild(startEl);
+  } else {
+    var submitFormContainer = document.querySelector(".submitFormContainer")
+    mainContainerEl.removeChild(submitFormContainer)
+  };
+  pTextEl.setAttribute("style", "display: none");
+  viewHighScoresEl.setAttribute("style", "display: none");
+  timerEl.setAttribute("style", "display: none");
+
+  
+
+  for (let index = 1; index <= localStorage.length; index++) {
+    const element = JSON.parse(localStorage.getItem("user" + [index]));
+
+    console.log(element)
+    console.log(element.userInitials + element.userScore)
+    console.log(element.userScore)
+
+    var scoreCard = document.createElement("li");
+    scoreCard.setAttribute("class", "scoreCard");
+    scoreCard.textContent = `${element.userInitials} - ${element.userScore}`;
+    mainContainerEl.append(scoreCard);
+  };
+
+  var hsContainerEl = document.createElement("div");
+  hsContainerEl.setAttribute("class", "hsContainer");
+  mainContainerEl.append(hsContainerEl);
+
+  var goBackButton = document.createElement("div");
+  goBackButton.classList.add("button", "hsButton");
+  goBackButton.textContent = "Go Back";
+  hsContainerEl.append(goBackButton);
+  goBackButton.addEventListener("click", function() {
+    location.reload();
+  })
+
+  var clearScoresButton = document.createElement("div");
+  clearScoresButton.classList.add("button", "hsButton");
+  clearScoresButton.textContent = "Clear High Scores";
+  hsContainerEl.append(clearScoresButton);
+  clearScoresButton.addEventListener("click", clearHighScores)
+
+};
+// clearing out highscore cards and local storage info
+function clearHighScores() {
+
+  for (let index = 0; index < localStorage.length; index++) {
+    var scoreCard = document.querySelector("li");
+    mainContainerEl.removeChild(scoreCard)
+  }
+  localStorage.clear();
+
+};
+
+
+
+// Event listeners to call the startQuiz function and viewHighScores function
 startEl.addEventListener("click", startQuiz);
 viewHighScoresEl.addEventListener("click", viewHighScores)
 

@@ -6,20 +6,27 @@
     <title>Code Quiz Challenge</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
+
   <body>
     <header>
-      <div id="highScores" href="">view high scores</div>
+      <!-- #highScores has event listner that displays locally stored scores if available. 
+        div will display "none" once the quiz is started to avoid bugs during the quiz -->
+      <div id="highScores">view high scores</div>
       <div id="timer">Time: <span id="count">0</span></div>
     </header>
 
     <main>
+        <!-- #mainText h1 is utilized for titles, questions, and confirmation of quiz completion-->
         <h1 id="mainText">Code Quiz Challenge</h1>
+        <!-- #container is the main element that all other elements get added to within the js code -->
         <div id="container">
+          <!-- #pText used for quiz description and final score display -->
             <p id="pText">
                 Try to answer the following code-related questions within the time
                 limit. Keep in mind that incorrect answers will penalize your score/time
                 by ten seconds.
             </p>
+            <!-- #start has event listner and begins the quiz. It is removed once clicked. -->
             <div id= "start" class="button">Start Quiz</div>
         </div>
     </main>

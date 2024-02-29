@@ -28,7 +28,6 @@ p, label{
 }
 
 li {
-
     display: block;
     text-align: center;
     background-color: var(--dark);
@@ -47,10 +46,10 @@ hr {
     width: 100%;
 }
 
+/* Pop refers to the feedback user gets when answering question*/
 .pop {
     align-self: flex-start;
     justify-content: flex-end;
-   
     font-style: oblique;
     color: gray;
     font-size: larger;
@@ -65,9 +64,7 @@ hr {
     color: var(--white);
     background-color: var(--dark);
     font-size: larger;
-    
 }
-
 
 .hsButton {
     padding: 10px;
@@ -79,7 +76,6 @@ hr {
 .hsContainer {
     display: flex;
     justify-content: flex-start;
-    
 }
 
 .button:hover, li:hover {
@@ -99,7 +95,6 @@ hr {
     justify-content: center;
     align-items: center;
     padding-right: 25px;
-    
 }
 
 .submitFormContainer #submit-btn {
@@ -138,8 +133,10 @@ hr {
     right: 10%;
 }
 
+/* Adjusts Initial submission to fit on smallers screens */
 @media screen and (max-width: 576px) {
     
+    /* Mainly needed to center up the input and submit button at end of quiz */
     .submitFormContainer {
         display: flex;
         flex-direction: column;
