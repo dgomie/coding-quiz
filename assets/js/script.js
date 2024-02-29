@@ -14,24 +14,29 @@ isDone = false;
 // TODO Add replace placeholder questions with coding questions
 var questionBank = {
     0: {
-        question: "Which of the following is not a fruit?",
-        answers: ["Apple", "Banana", "Orange", "Pizza"],
-        correctAnswer: "Pizza",
+        question: "Commonly used data types DO NOT include:",
+        answers: ["strings", "booleans", "alerts", "numbers"],
+        correctAnswer: "alerts",
     },
     1: {
-        question: "Which of the following is not an bird?",
-        answers: ["Husky", "Albatross", "Eagle", "Falcon"],
-        correctAnswer: "Husky",
+        question: "The condition in an if / else statement is enclosed with _________.",
+        answers: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+        correctAnswer: "Parenthesis",
     },
     2: {
-      question: "Which of the following is not an dessert?",
-      answers: ["Pie", "Cake", "Chocolate", "Lettuce"],
-      correctAnswer: "Lettuce",
+      question: "Arrays in JavaScript can be used to store _________.",
+      answers: ["numbers & strings", "other arrays", "booleans", "all of the above"],
+      correctAnswer: "all of the above",
     },
     3: {
-      question: "Which of the following is not an band?",
-      answers: ["Arctic Monkeys", "Monkeys", "Bonobos", "Gorillas"],
-      correctAnswer: "Bonobos",
+      question: "String values must be enclosed within _________ when being assigned to variables.",
+      answers: ["commas", "curly brackets", "quotes", "parenthesis"],
+      correctAnswer: "quotes",
+    },
+    4: {
+      question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+      answers: ["JavaScript", "Terminal / Bash", "For Loops", "console.log"],
+      correctAnswer: "console.log",
     },
 };
 

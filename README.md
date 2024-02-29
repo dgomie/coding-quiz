@@ -35,4 +35,3 @@ Additionally, the high scores section can be accessed by clicking on "view high 
 
 Please refer to the LICENSE in the repo.
 
-[def]: "./assets/images/how-many.png"

@@ -58,7 +58,7 @@ hr {
 
 .button {
     padding: 10px;
-    width: 100px;
+    width: auto;
     border-radius: 10px;
     text-align: center;
     color: var(--white);
