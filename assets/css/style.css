@@ -43,11 +43,6 @@ button {
     margin: 5px;
 }
 
-input {
-    margin: 10px;
-    width: auto;
-}
-
 hr {
     width: 100%;
 }
@@ -114,6 +109,7 @@ hr {
 
 .submitFormContainer input {
     width: 200px;
+    margin: 10px;
     margin-left: 0px;
 }
 
@@ -139,6 +135,31 @@ hr {
 
 #timer {
     position: absolute;
-    right: 5%;
+    right: 10%;
 }
 
+@media screen and (max-width: 576px) {
+    
+    .submitFormContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .submitFormContainer input {
+        margin: auto;
+        margin-bottom: 10%;
+        padding: auto;
+        padding-left: 12%;
+
+    }
+
+    .submitFormContainer label {
+        margin: 0px;
+    }
+
+    .submitFormContainer #submit-btn {
+        margin-left: 12%;
+    }
+}

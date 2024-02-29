@@ -98,13 +98,6 @@ var qBankLength = Object.keys(questionBank).length;
 function clearQuestion() {
     var answerContainerEl = document.querySelector("#answerContainer");
     mainContainerEl.removeChild(answerContainerEl)
-   
-    // var answerButtons = document.querySelectorAll("li");
-    // for (let index = 0; index < answerButtons.length; index++) {
-    //     const button = answerButtons[index];
-    //     answerContainerEl.removeChild(button)
-    // }
-    
 };
 
 function clearFeedback() {
@@ -132,7 +125,7 @@ function quizOver() {
   console.log("submit form container")
 
   var enterIntial = document.createElement("label");
-  enterIntial.textContent = "Enter initials: ";
+  enterIntial.textContent = "Enter initials:";
   enterIntial.setAttribute("id", "enterInitial");
 
   var initialInput = document.createElement("input");
