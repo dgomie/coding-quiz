@@ -3,7 +3,7 @@ var timerEl = document.querySelector("#timer")
 var startEl = document.querySelector("#start");
 var pTextEl = document.querySelector("#pText");
 var mainTextEl = document.querySelector("#mainText");
-var containerEl = document.querySelector("#container");
+var mainContainerEl = document.querySelector("#container");
 var viewHighScoresEl = document.querySelector("#highScores");
 var timeLeft = 60;
 var questionNum = 0;
@@ -14,10 +14,10 @@ function viewHighScores() {
   mainTextEl.textContent = "High Scores";
 
   if (!isDone) {
-    containerEl.removeChild(startEl);
+    mainContainerEl.removeChild(startEl);
   } else {
     var submitFormContainer = document.querySelector(".submitFormContainer")
-    containerEl.removeChild(submitFormContainer)
+    mainContainerEl.removeChild(submitFormContainer)
   };
   pTextEl.setAttribute("style", "display: none");
   viewHighScoresEl.setAttribute("style", "display: none");
@@ -35,12 +35,12 @@ function viewHighScores() {
     var scoreCard = document.createElement("li");
     scoreCard.setAttribute("class", "scoreCard");
     scoreCard.textContent = `${element.userInitials} - ${element.userScore}`;
-    containerEl.append(scoreCard);
+    mainContainerEl.append(scoreCard);
   };
 
   var hsContainerEl = document.createElement("div");
   hsContainerEl.setAttribute("class", "hsContainer");
-  containerEl.append(hsContainerEl);
+  mainContainerEl.append(hsContainerEl);
 
   var goBackButton = document.createElement("div");
   goBackButton.classList.add("button", "hsButton");
@@ -62,7 +62,7 @@ function clearHighScores() {
 
   for (let index = 0; index < localStorage.length; index++) {
     var scoreCard = document.querySelector("li");
-    containerEl.removeChild(scoreCard)
+    mainContainerEl.removeChild(scoreCard)
   }
   localStorage.clear();
 
@@ -96,40 +96,40 @@ var questionBank = {
 var qBankLength = Object.keys(questionBank).length;
 
 function clearQuestion() {
-    var answerButtons = document.querySelectorAll("li");
-    for (let index = 0; index < answerButtons.length; index++) {
-        const button = answerButtons[index];
-        containerEl.removeChild(button)
-    }
+    var answerContainerEl = document.querySelector("#answerContainer");
+    mainContainerEl.removeChild(answerContainerEl)
+   
+    // var answerButtons = document.querySelectorAll("li");
+    // for (let index = 0; index < answerButtons.length; index++) {
+    //     const button = answerButtons[index];
+    //     answerContainerEl.removeChild(button)
+    // }
+    
 };
 
 function clearFeedback() {
-  var feedbackPop = document.querySelector(".pop");
-  containerEl.removeChild(feedbackPop);
+  // var feedbackPop = document.querySelector(".pop");
+  var feedbackContainerEl = document.querySelector("#feedbackContainer")
+  mainContainerEl.removeChild(feedbackContainerEl);
 };
 
 /*gameOver function clears remaining question and answers and displays the user's final score 
 and a input box asking for the user's initials for placement on the leaderboard */
 
 function quizOver() {
+  mainContainerEl.style.flexDirection = "column";
   clearFeedback();
 
   // changing h1 to notify user that qiz is done and displaying user score
-  mainTextEl.textContent = "All Done!"
-  pTextEl.textContent = `Your final score is ${timeLeft}`
-  pTextEl.setAttribute("style", "display: inline")
-
-  // clearing the multiple choice answers
-  var answerButtons = document.querySelectorAll("li");
-  for (let index = 0; index < answerButtons.length; index++) {
-      const button = answerButtons[index];
-      containerEl.removeChild(button)
-  };
+  mainTextEl.textContent = "All Done!";
+  pTextEl.textContent = `Your final score is ${timeLeft}`;
+  pTextEl.setAttribute("style", "display: inline");
   
   // rendering the high score sumbission form
   var submitFormContainer = document.createElement("div");
   submitFormContainer.classList.add("submitFormContainer")
-  containerEl.append(submitFormContainer);
+  mainContainerEl.append(submitFormContainer);
+  console.log("submit form container")
 
   var enterIntial = document.createElement("label");
   enterIntial.textContent = "Enter initials: ";
@@ -153,7 +153,7 @@ function quizOver() {
   submitButton.addEventListener("click", function() {
     var initials = initialInput.value.trim();
     if (initials === "") {
-      alert("Please enter a value");
+      alert("Please enter your initials");
     } else {
       var userScore = {
           userInitials: initials,
@@ -180,16 +180,16 @@ function quizOver() {
 function startQuiz() {
     console.log("start button clicked");
     // clear start text and replace with question text
-    containerEl.removeChild(startEl);
+    mainContainerEl.removeChild(startEl);
     pTextEl.setAttribute("style", "display: none");
     viewHighScoresEl.setAttribute("style", "display: none");
+    mainContainerEl.style.flexDirection = "column-reverse";
     startTimer();
 
     
    
    // changeQuestion currently uses questionNum to pull the corresponding object from the question bank.  
   function changeQuestion() {
-      clearQuestion();
       checkDone();
       if (!isDone) {
         var currentQuestion = questionBank[questionNum]["question"];
@@ -199,38 +199,49 @@ function startQuiz() {
         // change h1 to question
         mainTextEl.textContent = currentQuestion;
 
+        var answerContainerEl = document.createElement("div");
+        answerContainerEl.setAttribute("id", "answerContainer")
+        mainContainerEl.append(answerContainerEl)
+
         // render answer choices
         for (let index = 0; index < currentAnswers.length; index++) {
           var answer= document.createElement('li');
           answer.classList.add("button");
           answer.textContent = currentAnswers[index];
-      
+          answerContainerEl.append(answer);
+
         //  check answer
         answer.addEventListener("click", function(){
           if (questionNum > 0) {
             clearFeedback();
           };
-
+          clearQuestion();
           questionNum++;
+
+
+
+          var feedbackContainerEl = document.createElement("div");
+          feedbackContainerEl.setAttribute("id", "feedbackContainer")
+          mainContainerEl.append(feedbackContainerEl);
+
+          var hrEl = document.createElement("hr");
+          feedbackContainerEl.append(hrEl);
 
           var feedbackPop = document.createElement("p");
           feedbackPop.classList.add("pop");
-          containerEl.append(feedbackPop);
+          feedbackContainerEl.append(feedbackPop);
 
           var button = this.textContent;
           console.log(button);
 
           if (button === currentCorrect) {
               feedbackPop.textContent = "Correct!";
-              changeQuestion()
-              
           } else {
               feedbackPop.textContent = "Wrong!";
               timeLeft -= 10;
-              changeQuestion();
           }
+          changeQuestion()
         });
-        containerEl.append(answer);
       };
     };
 
@@ -256,6 +267,7 @@ function startTimer() {
     } else {
       timeLeft--;
       quizOver()
+      clearQuestion();
       clearInterval(timerInterval);
       countEl.textContent = timeLeft;
 
