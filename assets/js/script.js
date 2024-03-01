@@ -213,8 +213,9 @@ submitButton.addEventListener("click", function() {
     alert("Too many characters.\n Please enter a value between 1-30 characters.");
   } else {
     localStorage.setItem(`${initials}`, JSON.stringify(timeLeft));
-  }
     viewHighScores();
+  }
+  
 
   });
 };
