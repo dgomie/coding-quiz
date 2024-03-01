@@ -67,8 +67,8 @@ function startQuiz() {
         mainTextEl.textContent = currentQuestion;
 
         var answerContainerEl = document.createElement("div");
-        answerContainerEl.setAttribute("id", "answerContainer")
-        mainContainerEl.append(answerContainerEl)
+        answerContainerEl.setAttribute("id", "answerContainer");
+        mainContainerEl.append(answerContainerEl);
 
         // render answer choice buttons
         for (let index = 0; index < currentAnswers.length; index++) {
@@ -87,7 +87,7 @@ function startQuiz() {
 
           // creates feedback container
           var feedbackContainerEl = document.createElement("div");
-          feedbackContainerEl.setAttribute("id", "feedbackContainer")
+          feedbackContainerEl.setAttribute("id", "feedbackContainer");
           mainContainerEl.append(feedbackContainerEl);
           // renders horizontal rule divider
           var hrEl = document.createElement("hr");
@@ -107,7 +107,7 @@ function startQuiz() {
               feedbackPop.textContent = "Wrong!";
               timeLeft -= 10;
           }
-          changeQuestion()
+          changeQuestion();
         });
       };
     };
@@ -116,7 +116,6 @@ function startQuiz() {
     for (let index = 0; index < buttonsEl.length; index++) {
         var answer = buttonsEl[index];
     }};
-
     changeQuestion();
     checkDone();   
   };
@@ -124,7 +123,6 @@ function startQuiz() {
 // Starts the countdown timer 
 function startTimer() {
   var timerInterval = setInterval(function() {
-    
     // if no questions remain the clock stops
     if (isDone && timeLeft > 0) {
       clearInterval(timerInterval);
@@ -134,7 +132,7 @@ function startTimer() {
       timeLeft--;
     } else {
       timeLeft--;
-      quizOver()
+      quizOver();
       clearQuestion();
       clearInterval(timerInterval);
       countEl.textContent = timeLeft;
@@ -156,12 +154,12 @@ function checkDone() {
 // removes the current answer elements from the page by removing the answerContainer
 function clearQuestion() {
   var answerContainerEl = document.querySelector("#answerContainer");
-  mainContainerEl.removeChild(answerContainerEl)
+  mainContainerEl.removeChild(answerContainerEl);
 };
 
 // removes the feedback from the page by removing the feedbackContainer
 function clearFeedback() {
-var feedbackContainerEl = document.querySelector("#feedbackContainer")
+var feedbackContainerEl = document.querySelector("#feedbackContainer");
 mainContainerEl.removeChild(feedbackContainerEl);
 };
 
@@ -180,7 +178,7 @@ pTextEl.setAttribute("style", "display: inline");
 // rendering the high score sumbission form
 // submit form container
 var submitFormContainer = document.createElement("div");
-submitFormContainer.classList.add("submitFormContainer")
+submitFormContainer.classList.add("submitFormContainer");
 mainContainerEl.append(submitFormContainer);
 
 
@@ -188,17 +186,17 @@ mainContainerEl.append(submitFormContainer);
 var enterIntial = document.createElement("label");
 enterIntial.textContent = "Enter initials:";
 enterIntial.setAttribute("id", "enterInitial");
+enterIntial.setAttribute("for", "initialInput")
 
 // initials input
 var initialInput = document.createElement("input");
 initialInput.setAttribute("id", "initialInput");
 initialInput.type = "text";
-initialInput.autofocus;
 
 // submit button
 var submitButton = document.createElement("div");
 submitButton.textContent = "Submit";
-submitButton.classList.add("button")
+submitButton.classList.add("button");
 submitButton.setAttribute('id', "submit-btn");
 // appending form elements to container
 submitFormContainer.append(enterIntial, initialInput, submitButton);
@@ -212,7 +210,7 @@ submitButton.addEventListener("click", function() {
   if (initials === "") {
     alert("Please enter your initials.");
   } else if (initials.length > 30) {
-    alert("Too many characters.\n Please enter a value between 1-30 characters.")
+    alert("Too many characters.\n Please enter a value between 1-30 characters.");
   }else {
     var userScore = {
         userInitials: initials,
@@ -231,7 +229,6 @@ submitButton.addEventListener("click", function() {
   };
 
 });
-
 };
 
 // function parses and grabs the user high scores from local storage
@@ -244,8 +241,8 @@ function viewHighScores() {
   if (!isDone) {
     mainContainerEl.removeChild(startEl);
   } else {
-    var submitFormContainer = document.querySelector(".submitFormContainer")
-    mainContainerEl.removeChild(submitFormContainer)
+    var submitFormContainer = document.querySelector(".submitFormContainer");
+    mainContainerEl.removeChild(submitFormContainer);
   };
   pTextEl.setAttribute("style", "display: none");
   viewHighScoresEl.setAttribute("style", "display: none");
@@ -272,29 +269,26 @@ function viewHighScores() {
   hsContainerEl.append(goBackButton);
   goBackButton.addEventListener("click", function() {
     location.reload();
-  })
+  });
 // Removes the scorecards from the container and clears the local storage using clearHighScores function
   var clearScoresButton = document.createElement("div");
   clearScoresButton.classList.add("button", "hsButton");
   clearScoresButton.textContent = "Clear High Scores";
   hsContainerEl.append(clearScoresButton);
-  clearScoresButton.addEventListener("click", clearHighScores)
-
+  clearScoresButton.addEventListener("click", clearHighScores);
 };
 // function for clearing out highscore cards and local storage info
 function clearHighScores() {
-
   for (let index = 0; index < localStorage.length; index++) {
     var scoreCard = document.querySelector("li");
-    mainContainerEl.removeChild(scoreCard)
-  }
+    mainContainerEl.removeChild(scoreCard);
+  };
   localStorage.clear();
-
 };
 
 // Event listeners to call the startQuiz function and viewHighScores function
 startEl.addEventListener("click", startQuiz);
-viewHighScoresEl.addEventListener("click", viewHighScores)
+viewHighScoresEl.addEventListener("click", viewHighScores);
 
 
 // TODO If time allows try to sort high scores from highest to lowest
