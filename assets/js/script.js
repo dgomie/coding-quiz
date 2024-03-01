@@ -24,7 +24,7 @@ var questionBank = [
   {
       question: "The condition in an if / else statement is enclosed with _________.",
       answers: ["quotes", "curly brackets", "parenthesis", "square brackets"],
-      correctAnswer: "Parenthesis",
+      correctAnswer: "parenthesis",
   },
   {
     question: "Arrays in JavaScript can be used to store _________.",
@@ -211,24 +211,12 @@ submitButton.addEventListener("click", function() {
     alert("Please enter your initials.");
   } else if (initials.length > 30) {
     alert("Too many characters.\n Please enter a value between 1-30 characters.");
-  }else {
-    var userScore = {
-        userInitials: initials,
-        userScore: timeLeft,
-      };
-      
-    
-    // check if there's already high scores in local storage. If no scores, create new userScore object
-    if (localStorage.length === 0){
-      localStorage.setItem("user" + 1, JSON.stringify(userScore));
-    } else {
-      var numHighScores = localStorage.length +1;
-      localStorage.setItem("user" + numHighScores, JSON.stringify(userScore));
-    };
+  } else {
+    localStorage.setItem(`${initials}`, JSON.stringify(timeLeft));
+  }
     viewHighScores();
-  };
 
-});
+  });
 };
 
 // function parses and grabs the user high scores from local storage
@@ -247,16 +235,27 @@ function viewHighScores() {
   pTextEl.setAttribute("style", "display: none");
   viewHighScoresEl.setAttribute("style", "display: none");
   timerEl.setAttribute("style", "display: none");
-// renders the high score scorecards from the local storage data
-  for (let index = 1; index <= localStorage.length; index++) {
-    const element = JSON.parse(localStorage.getItem("user" + [index]));
 
-    // high score cards with user initials and score
-    var scoreCard = document.createElement("li");
-    scoreCard.setAttribute("class", "scoreCard");
-    scoreCard.textContent = `${element.userInitials} - ${element.userScore}`;
-    mainContainerEl.append(scoreCard);
-  };
+  // pulls user/score data from local storage
+  var userScores = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    var user = localStorage.key(i);
+    var score = localStorage.getItem(localStorage.key(i));
+    userScores[user] = score; 
+  }
+  // sorts user names by the score value from highest to lowest
+  var namesSortedByScore = Object.keys(userScores).sort(function(a,b){return userScores[b]-userScores[a]})
+  console.log(namesSortedByScore[0])
+  // creates and renders scorecard for high score list
+  for (let index = 0; index < localStorage.length; index++) {
+    var sortedUser = namesSortedByScore[index];
+    var sortedScore = userScores[sortedUser]
+     var scoreCard = document.createElement("li");
+        scoreCard.setAttribute("class", "scoreCard");
+        scoreCard.textContent = `${sortedUser} - ${sortedScore}`;
+        mainContainerEl.append(scoreCard);
+    }; 
+  
   // high score container that cards and buttons are appended to
   var hsContainerEl = document.createElement("div");
   hsContainerEl.setAttribute("class", "hsContainer");
@@ -277,6 +276,8 @@ function viewHighScores() {
   hsContainerEl.append(clearScoresButton);
   clearScoresButton.addEventListener("click", clearHighScores);
 };
+
+
 // function for clearing out highscore cards and local storage info
 function clearHighScores() {
   for (let index = 0; index < localStorage.length; index++) {
@@ -289,6 +290,3 @@ function clearHighScores() {
 // Event listeners to call the startQuiz function and viewHighScores function
 startEl.addEventListener("click", startQuiz);
 viewHighScoresEl.addEventListener("click", viewHighScores);
-
-
-// TODO If time allows try to sort high scores from highest to lowest
