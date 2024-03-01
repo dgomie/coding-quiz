@@ -13,8 +13,8 @@ var questionNum = 0;
 // used to in startimer, checkDone, changeQuestion, and viewHighScores to determine if quiz is over
 isDone = false;
 
-
-// Quiz questions, answers, and correct answer. Array is used in changeQuestion function within the startQuiz function
+/* Quiz questions, answers, and correct answer. 
+Array is used in changeQuestion function within the startQuiz function */
 var questionBank = [
   {
       question: "Commonly used data types DO NOT include:",
@@ -42,8 +42,9 @@ var questionBank = [
     correctAnswer: "console.log",
   },
 ];
+// returns the number of questions in questionBank
+var qBankLength = questionBank.length;
 
-var qBankLength = Object.keys(questionBank).length;
 
 // startQuiz begins the quiz and handles the changing of the quesitons 
 function startQuiz() {
@@ -54,8 +55,6 @@ function startQuiz() {
     mainContainerEl.style.flexDirection = "column-reverse";
     startTimer();
 
-    
-   
    // changeQuestion currently uses questionNum to pull the corresponding object from the question bank.  
   function changeQuestion() {
       checkDone();
