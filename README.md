@@ -45,6 +45,7 @@ Note: If an issue occurs with displaying high scores, navigate the the 'view hig
 
 Stack Overflow user [Markus R](https://stackoverflow.com/users/2428503/markus-rn): [Sorting object property by value](https://stackoverflow.com/questions/1069666/sorting-object-property-by-values)
 
+MDN Web Docs: [Storage: key() method](https://developer.mozilla.org/en-US/docs/Web/API/Storage/key)
 
 ## License
 
