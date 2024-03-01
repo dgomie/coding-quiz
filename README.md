@@ -16,7 +16,7 @@ Click the "Start Quiz" button to start the timer and begin the quiz.
 
 <img src="./assets/images/quiz-home.png" width=500px height= 330 alt="Coding quiz challenge start page." />
 
-One question will display at a time as well as a list of answer choice buttons. Click on the answer button to select your choice. 
+One question will display at a time as well as a list of answer choice buttons. Click on the answer button to select your choice.
 
 <img src="./assets/images/question-first.png" width=500px height= 330 alt="Quiz challenge first question with multiple choice answers." />
 
@@ -25,7 +25,7 @@ Once clicked, the next question and answer set will display as well as a feedbac
 <img src="./assets/images/question-correct.png" width=500px height= 330 alt="Quiz challenge question with 'correct' feedback below multiple choice answers." />
 <img src="./assets/images/question-wrong.png" width=500px height= 330 alt="Quiz challenge question with 'wrong' feedback below multiple choice answers." />
 
-The quiz ends when there is either no more questions left or when the timer reaches zero. Score is determined by the amount of time on the timer, and can be a negative number. Once the quiz is over the user's final score will display along with an initials submission form to submit the user's name to the high score list. 
+The quiz ends when there is either no more questions left or when the timer reaches zero. Score is determined by the amount of time on the timer, and can be a negative number. Once the quiz is over the user's final score will display along with an initials submission form to submit the user's name to the high score list.
 
 <img src="./assets/images/high-score-screen.png" width=500px height= 330 alt="End of quiz screen with final score and initials input form." />
 
@@ -39,9 +39,13 @@ Additionally, the high scores section can be accessed by clicking on "view high 
 
 <img src="./assets/images/viewhighscore-highlight.png" width=500px alt="Coding quiz challenge start page with 'view high scores' highlighted." />
 
-Note: If an issue occurs with displaying high scores, navigate the the 'view high scores' section and click on the 'clear high scores' button. 
+Note: If an issue occurs with displaying high scores, navigate the the 'view high scores' section and click on the 'clear high scores' button.
+
+## Credits
+
+Stack Overflow user [Markus R](https://stackoverflow.com/users/2428503/markus-rn): [Sorting object property by value](https://stackoverflow.com/questions/1069666/sorting-object-property-by-values)
+
 
 ## License
 
 Please refer to the LICENSE in the repo.
-
