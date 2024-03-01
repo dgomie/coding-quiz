@@ -246,7 +246,7 @@ function viewHighScores() {
   }
   // sorts user names by the score value from highest to lowest
   var namesSortedByScore = Object.keys(userScores).sort(function(a,b){return userScores[b]-userScores[a]})
-  console.log(namesSortedByScore[0])
+
   // creates and renders scorecard for high score list
   for (let index = 0; index < localStorage.length; index++) {
     var sortedUser = namesSortedByScore[index];
