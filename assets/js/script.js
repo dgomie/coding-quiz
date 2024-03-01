@@ -11,34 +11,34 @@ isDone = false;
 
 // TODO If time allows try to sort high scores from highest to lowest
 
-// Quiz questions, answers, and correct answer. Object is used in changeQuestion function within the startQuiz function
-var questionBank = {
-    0: {
-        question: "Commonly used data types DO NOT include:",
-        answers: ["strings", "booleans", "alerts", "numbers"],
-        correctAnswer: "alerts",
-    },
-    1: {
-        question: "The condition in an if / else statement is enclosed with _________.",
-        answers: ["quotes", "curly brackets", "parenthesis", "square brackets"],
-        correctAnswer: "Parenthesis",
-    },
-    2: {
-      question: "Arrays in JavaScript can be used to store _________.",
-      answers: ["numbers & strings", "other arrays", "booleans", "all of the above"],
-      correctAnswer: "all of the above",
-    },
-    3: {
-      question: "String values must be enclosed within _________ when being assigned to variables.",
-      answers: ["commas", "curly brackets", "quotes", "parenthesis"],
-      correctAnswer: "quotes",
-    },
-    4: {
-      question: "A very useful tool used during development and debugging for printing content to the debugger is:",
-      answers: ["JavaScript", "Terminal / Bash", "For Loops", "console.log"],
-      correctAnswer: "console.log",
-    },
-};
+// Quiz questions, answers, and correct answer. Array is used in changeQuestion function within the startQuiz function
+var questionBank = [
+  {
+      question: "Commonly used data types DO NOT include:",
+      answers: ["strings", "booleans", "alerts", "numbers"],
+      correctAnswer: "alerts",
+  },
+  {
+      question: "The condition in an if / else statement is enclosed with _________.",
+      answers: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+      correctAnswer: "Parenthesis",
+  },
+  {
+    question: "Arrays in JavaScript can be used to store _________.",
+    answers: ["numbers & strings", "other arrays", "booleans", "all of the above"],
+    correctAnswer: "all of the above",
+  },
+  {
+    question: "String values must be enclosed within _________ when being assigned to variables.",
+    answers: ["commas", "curly brackets", "quotes", "parenthesis"],
+    correctAnswer: "quotes",
+  },
+  {
+    question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    answers: ["JavaScript", "Terminal / Bash", "For Loops", "console.log"],
+    correctAnswer: "console.log",
+  },
+];
 
 var qBankLength = Object.keys(questionBank).length;
 
