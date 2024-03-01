@@ -5,11 +5,14 @@ var pTextEl = document.querySelector("#pText");
 var mainTextEl = document.querySelector("#mainText");
 var mainContainerEl = document.querySelector("#container");
 var viewHighScoresEl = document.querySelector("#highScores");
+
+// countdown timer value
 var timeLeft = 60;
+// keeps track of current question
 var questionNum = 0;
+// used to in startimer, checkDone, changeQuestion, and viewHighScores to determine if quiz is over
 isDone = false;
 
-// TODO If time allows try to sort high scores from highest to lowest
 
 // Quiz questions, answers, and correct answer. Array is used in changeQuestion function within the startQuiz function
 var questionBank = [
@@ -293,3 +296,6 @@ function clearHighScores() {
 // Event listeners to call the startQuiz function and viewHighScores function
 startEl.addEventListener("click", startQuiz);
 viewHighScoresEl.addEventListener("click", viewHighScores)
+
+
+// TODO If time allows try to sort high scores from highest to lowest
