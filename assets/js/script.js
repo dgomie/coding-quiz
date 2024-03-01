@@ -7,7 +7,7 @@ var mainContainerEl = document.querySelector("#container");
 var viewHighScoresEl = document.querySelector("#highScores");
 
 // countdown timer value
-var timeLeft = 60;
+var timeLeft = 75;
 // keeps track of current question
 var questionNum = 0;
 // used to in startimer, checkDone, changeQuestion, and viewHighScores to determine if quiz is over
